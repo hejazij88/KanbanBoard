@@ -1,1 +1,3 @@
-<Solution />
+<Solution>
+  <Project Path="Domain/KanbanBoard.Domain/KanbanBoard.Domain.csproj" />
+</Solution>
