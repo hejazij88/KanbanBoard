@@ -1,5 +1,4 @@
 ﻿using KanbanBoard.Domain.Common;
-using KanbanBoard.Domain.Models;
 
 public class BoardColumn : AuditableEntity
 {
