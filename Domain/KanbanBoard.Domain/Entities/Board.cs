@@ -1,15 +1,26 @@
-﻿namespace KanbanBoard.Domain.Models;
+﻿using KanbanBoard.Domain.Common;
+using KanbanBoard.Domain.Models;
 
-public class Board
+public class Board : AuditableEntity
 {
-    public Guid Id { get; set; }
+    public string Title { get; private set; }
 
-    public string Title { get; set; } = null!;
+    public Guid WorkspaceId { get; private set; }
 
-    public Guid WorkspaceId { get; set; }
+    public Workspace Workspace { get; private set; } = null!;
 
-    public Workspace Workspace { get; set; } = null!;
+    private Board()
+    {
+    }
 
-    public ICollection<BoardColumn> Columns { get; set; }
+    public Board(
+        string title,
+        Guid workspaceId)
+    {
+        Title = title;
+        WorkspaceId = workspaceId;
+    }
+
+    public ICollection<BoardColumn> Columns
         = new List<BoardColumn>();
 }

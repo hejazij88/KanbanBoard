@@ -1,10 +1,31 @@
-﻿namespace KanbanBoard.Domain.Models;
+﻿using KanbanBoard.Domain.Common;
+using KanbanBoard.Domain.Models;
 
-public class User
+public class User : AuditableEntity
 {
-    public Guid Id { get; set; }
-    public string FullName { get; set; } = null!;
-    public string HashPassword { get; set; } = null!;
-    public string Email { get; set; } = null!;
+    public string FullName { get; private set; }
 
+    public string Email { get; private set; }
+
+    public string PasswordHash { get; private set; }
+
+    private User()
+    {
+    }
+
+    public User(
+        string fullName,
+        string email,
+        string passwordHash)
+    {
+        FullName = fullName;
+        Email = email;
+        PasswordHash = passwordHash;
+    }
+
+    public ICollection<WorkspaceMember> Workspaces
+        = new List<WorkspaceMember>();
+
+    public ICollection<TaskItem> AssignedTasks
+        = new List<TaskItem>();
 }

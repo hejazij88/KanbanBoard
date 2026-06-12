@@ -1,17 +1,30 @@
-﻿namespace KanbanBoard.Domain.Models;
+﻿using KanbanBoard.Domain.Common;
+using KanbanBoard.Domain.Models;
 
-public class BoardColumn
+public class BoardColumn : AuditableEntity
 {
-    public Guid Id { get; set; }
+    public string Name { get; private set; }
 
-    public string Name { get; set; } = null!;
+    public int Order { get; private set; }
 
-    public int Order { get; set; }
+    public Guid BoardId { get; private set; }
 
-    public Guid BoardId { get; set; }
+    public Board Board { get; private set; } = null!;
 
-    public Board Board { get; set; } = null!;
+    private BoardColumn()
+    {
+    }
 
-    public ICollection<TaskItem> Tasks { get; set; }
+    public BoardColumn(
+        string name,
+        int order,
+        Guid boardId)
+    {
+        Name = name;
+        Order = order;
+        BoardId = boardId;
+    }
+
+    public ICollection<TaskItem> Tasks
         = new List<TaskItem>();
 }

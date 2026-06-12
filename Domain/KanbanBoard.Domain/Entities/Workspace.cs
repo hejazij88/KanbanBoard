@@ -1,15 +1,22 @@
-﻿namespace KanbanBoard.Domain.Models;
+﻿using KanbanBoard.Domain.Common;
+using KanbanBoard.Domain.Models;
 
-public class Workspace
+public class Workspace : AuditableEntity
 {
-    public Guid Id { get; set; }
+    public string Name { get; private set; }
 
-    public string Name { get; set; } = null!;
+    private Workspace()
+    {
+    }
 
-    public Guid OwnerId { get; set; }
+    public Workspace(string name)
+    {
+        Name = name;
+    }
 
-    public User Owner { get; set; } = null!;
+    public ICollection<WorkspaceMember> Members
+        = new List<WorkspaceMember>();
 
-    public ICollection<Board> Boards { get; set; }
+    public ICollection<Board> Boards
         = new List<Board>();
 }
