@@ -12,6 +12,6 @@ public class BoardColumn
 
     public Board Board { get; set; } = null!;
 
-    //public ICollection<TaskItem> Tasks { get; set; }
-    //    = new List<TaskItem>();
+    public ICollection<TaskItem> Tasks { get; set; }
+        = new List<TaskItem>();
 }

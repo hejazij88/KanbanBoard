@@ -10,6 +10,6 @@ public class Board
 
     public Workspace Workspace { get; set; } = null!;
 
-    //public ICollection<BoardColumn> Columns { get; set; }
-    //    = new List<BoardColumn>();
+    public ICollection<BoardColumn> Columns { get; set; }
+        = new List<BoardColumn>();
 }

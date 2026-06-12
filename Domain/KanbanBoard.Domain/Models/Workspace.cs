@@ -10,6 +10,6 @@ public class Workspace
 
     public User Owner { get; set; } = null!;
 
-    //public ICollection<Board> Boards { get; set; }
-    //    = new List<Board>();
+    public ICollection<Board> Boards { get; set; }
+        = new List<Board>();
 }

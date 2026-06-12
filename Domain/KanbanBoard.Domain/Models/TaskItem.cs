@@ -1,4 +1,6 @@
-﻿namespace KanbanBoard.Domain.Models;
+﻿using KanbanBoard.Domain.Enums;
+
+namespace KanbanBoard.Domain.Models;
 
 public class TaskItem
 {
