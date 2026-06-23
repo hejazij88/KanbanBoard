@@ -1,4 +1,6 @@
-﻿namespace KanbanBoard.Application.DTOs.Column;
+﻿using KanbanBoard.Application.DTOs.Task;
+
+namespace KanbanBoard.Application.DTOs.Column;
 
 public class ColumnDto
 {

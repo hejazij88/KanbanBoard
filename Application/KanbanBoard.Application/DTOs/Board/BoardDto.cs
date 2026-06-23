@@ -1,4 +1,6 @@
-﻿namespace KanbanBoard.Application.DTOs.Board;
+﻿using KanbanBoard.Application.DTOs.Column;
+
+namespace KanbanBoard.Application.DTOs.Board;
 
 public class BoardDto
 {
