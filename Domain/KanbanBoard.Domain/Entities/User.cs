@@ -1,4 +1,5 @@
 ﻿using KanbanBoard.Domain.Common;
+using System.Xml.Linq;
 
 public class User : AuditableEntity
 {
@@ -7,6 +8,8 @@ public class User : AuditableEntity
     public string Email { get; private set; }
 
     public string PasswordHash { get; private set; }
+    public string? RefreshToken { get; set; }
+    public DateTime? RefreshTokenExpiryTime { get; set; }
 
     private User()
     {
@@ -27,4 +30,6 @@ public class User : AuditableEntity
 
     public ICollection<TaskItem> AssignedTasks
         = new List<TaskItem>();
+
+    public ICollection<Comment> Comments { get; set; } = new List<Comment>();
 }

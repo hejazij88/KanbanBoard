@@ -20,6 +20,6 @@ public class Board : AuditableEntity
         WorkspaceId = workspaceId;
     }
 
-    public ICollection<BoardColumn> Columns
+    public ICollection<BoardColumn> Columns { get; private set; }
         = new List<BoardColumn>();
 }

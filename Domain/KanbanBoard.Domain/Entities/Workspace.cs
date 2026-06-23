@@ -3,6 +3,10 @@
 public class Workspace : AuditableEntity
 {
     public string Name { get; private set; }
+    public Guid OwnerId { get; set; }
+    public User Owner { get; set; } = null!;
+    public DateTime CreatedAt { get; set; }
+ 
 
     private Workspace()
     {

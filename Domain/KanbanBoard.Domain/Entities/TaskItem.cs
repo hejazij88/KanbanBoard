@@ -1,5 +1,6 @@
 ﻿using KanbanBoard.Domain.Common;
 using KanbanBoard.Domain.Enums;
+using System.Net.Mail;
 
 public class TaskItem : AuditableEntity
 {
@@ -8,7 +9,7 @@ public class TaskItem : AuditableEntity
     public string Description { get; private set; }
 
     public Priority Priority { get; private set; }
-
+    public int Order { get;private set; }
     public DateTime? DueDate { get; private set; }
 
     public Guid ColumnId { get; private set; }
@@ -19,6 +20,9 @@ public class TaskItem : AuditableEntity
 
     public User? AssignedUser { get; private set; }
 
+    public ICollection<Comment> Comments { get; set; } = new List<Comment>();
+    public ICollection<Attachment> Attachments { get; set; } = new List<Attachment>();
+
     private TaskItem()
     {
     }
@@ -27,11 +31,13 @@ public class TaskItem : AuditableEntity
         string title,
         string description,
         Priority priority,
-        Guid columnId)
+        Guid columnId,
+        int order)
     {
         Title = title;
         Description = description;
         Priority = priority;
         ColumnId = columnId;
+        Order = order;
     }
 }
