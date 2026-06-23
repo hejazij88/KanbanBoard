@@ -1,4 +1,6 @@
-﻿namespace KanbanBoard.Application.DTOs.Attachment;
+﻿using Microsoft.AspNetCore.Http;
+
+namespace KanbanBoard.Application.DTOs.Attachment;
 
 public class CreateAttachmentDto
 {
