@@ -18,8 +18,4 @@
     <ProjectReference Include="..\..\Domain\KanbanBoard.Domain\KanbanBoard.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Workspace\Commands\" />
-  </ItemGroup>
-
 </Project>
