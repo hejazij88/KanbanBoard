@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <Folder Include="Features\Comment\Commands\" />
-    <Folder Include="Features\Comment\Queries\" />
     <Folder Include="Features\Task\Queries\" />
   </ItemGroup>
 
