@@ -22,7 +22,6 @@
     <Folder Include="Features\Attachment\Queries\" />
     <Folder Include="Features\Comment\Commands\" />
     <Folder Include="Features\Task\Queries\" />
-    <Folder Include="Interfaces\Repositories\" />
   </ItemGroup>
 
 </Project>
