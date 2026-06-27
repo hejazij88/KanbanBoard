@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using KanbanBoard.Domain.Entities;
 
 namespace KanbanBoard.Application.Interfaces.Services;
 

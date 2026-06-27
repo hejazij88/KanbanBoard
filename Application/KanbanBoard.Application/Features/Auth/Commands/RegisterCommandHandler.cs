@@ -3,6 +3,7 @@ using System.Text;
 using KanbanBoard.Application.DTOs.Auth;
 using KanbanBoard.Application.Interfaces.Repositories;
 using KanbanBoard.Application.Interfaces.Services;
+using KanbanBoard.Domain.Entities;
 using MediatR;
 
 namespace KanbanBoard.Application.Features.Auth.Commands;

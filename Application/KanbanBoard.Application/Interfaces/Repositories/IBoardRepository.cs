@@ -1,4 +1,5 @@
 ﻿using System.Data.Common;
+using KanbanBoard.Domain.Entities;
 
 namespace KanbanBoard.Application.Interfaces.Repositories;
 
