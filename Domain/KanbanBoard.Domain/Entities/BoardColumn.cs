@@ -26,6 +26,18 @@ public class BoardColumn : AuditableEntity
         BoardId = boardId;
     }
 
+    public BoardColumn(
+        Guid id,
+        string name,
+        int order,
+        Guid boardId)
+    {
+        Id = id;
+        Name = name;
+        Order = order;
+        BoardId = boardId;
+    }
+
     public ICollection<TaskItem> Tasks
         = new List<TaskItem>();
 }
