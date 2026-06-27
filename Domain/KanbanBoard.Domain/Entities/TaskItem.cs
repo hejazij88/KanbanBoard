@@ -1,8 +1,7 @@
 ﻿using KanbanBoard.Domain.Common;
 using KanbanBoard.Domain.Enums;
-using System.Net.Mail;
-using KanbanBoard.Domain.Entities;
-using Attachment = KanbanBoard.Domain.Entities.Attachment;
+
+namespace KanbanBoard.Domain.Entities;
 
 public class TaskItem : AuditableEntity
 {
