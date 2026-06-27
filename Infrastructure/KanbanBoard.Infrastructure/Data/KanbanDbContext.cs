@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using KanbanBoard.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace KanbanBoard.Infrastructure.Data;
 

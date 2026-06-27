@@ -1,5 +1,7 @@
 ﻿using KanbanBoard.Domain.Common;
 
+namespace KanbanBoard.Domain.Entities;
+
 public class Workspace : AuditableEntity
 {
     public string Name { get; private set; }

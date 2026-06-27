@@ -1,4 +1,5 @@
 ﻿using KanbanBoard.Domain.Common;
+using KanbanBoard.Domain.Entities;
 using KanbanBoard.Domain.Enums;
 
 public class WorkspaceMember : BaseEntity

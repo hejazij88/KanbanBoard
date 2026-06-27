@@ -1,4 +1,6 @@
-﻿namespace KanbanBoard.Application.Interfaces.Repositories;
+﻿using KanbanBoard.Domain.Entities;
+
+namespace KanbanBoard.Application.Interfaces.Repositories;
 
 public interface IColumnRepository : IRepository<BoardColumn>
 {

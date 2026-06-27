@@ -1,5 +1,7 @@
 ﻿using KanbanBoard.Domain.Common;
 
+namespace KanbanBoard.Domain.Entities;
+
 public class BoardColumn : AuditableEntity
 {
     public string Name { get; private set; }
@@ -19,6 +21,18 @@ public class BoardColumn : AuditableEntity
         int order,
         Guid boardId)
     {
+        Name = name;
+        Order = order;
+        BoardId = boardId;
+    }
+
+    public BoardColumn(
+        Guid id,
+        string name,
+        int order,
+        Guid boardId)
+    {
+        Id = id;
         Name = name;
         Order = order;
         BoardId = boardId;

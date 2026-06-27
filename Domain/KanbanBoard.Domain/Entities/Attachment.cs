@@ -1,4 +1,6 @@
-﻿public class Attachment
+﻿namespace KanbanBoard.Domain.Entities;
+
+public class Attachment
 {
     public Guid Id { get; set; }
     public string FileName { get; set; } = string.Empty;

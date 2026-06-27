@@ -1,5 +1,6 @@
 ﻿using KanbanBoard.Domain.Common;
-using System.Xml.Linq;
+
+namespace KanbanBoard.Domain.Entities;
 
 public class User : AuditableEntity
 {
