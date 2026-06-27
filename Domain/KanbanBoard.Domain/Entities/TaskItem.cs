@@ -41,4 +41,11 @@ public class TaskItem : AuditableEntity
         ColumnId = columnId;
         Order = order;
     }
+
+    public void MoveToColumn(Guid newColumnId, int newOrder)
+    {
+        ColumnId = newColumnId;
+        Order = newOrder;
+        DueDate = DateTime.UtcNow;
+    }
 }
