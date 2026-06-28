@@ -27,7 +27,7 @@ public class DeleteColumnCommandHandler:IRequestHandler<DeleteColumnCommand,bool
         if (column.Board.Workspace.OwnerId != userId)
             throw new UnauthorizedAccessException("Only the owner can delete the column.");
 
-        _columnRepository.DeleteAsync(column);
+        _columnRepository.Delete(column);
         await _columnRepository.SaveChangesAsync();
         return true;
     }

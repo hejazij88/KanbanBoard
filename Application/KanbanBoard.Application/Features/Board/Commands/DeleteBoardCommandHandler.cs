@@ -27,7 +27,7 @@ public class DeleteBoardCommandHandler : IRequestHandler<DeleteBoardCommand, boo
         if (board.Workspace.OwnerId != userId)
             throw new UnauthorizedAccessException("Only the owner can delete the Board.");
 
-        _boardRepository.DeleteAsync(board);
+        _boardRepository.Delete(board);
         await _boardRepository.SaveChangesAsync();
         return true;
     }

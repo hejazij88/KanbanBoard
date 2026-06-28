@@ -37,7 +37,7 @@ public class MoveTaskCommandHandler : IRequestHandler<MoveTaskCommand, bool>
 
         task.MoveToColumn(request.MoveTaskDto.TargetColumnId, newOrder);
 
-        _taskRepo.UpdateAsync(task);
+        _taskRepo.Update(task);
         await _taskRepo.SaveChangesAsync();
 
         return true;

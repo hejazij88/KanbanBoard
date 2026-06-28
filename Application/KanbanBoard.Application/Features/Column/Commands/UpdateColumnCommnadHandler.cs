@@ -36,7 +36,7 @@ public class UpdateColumnCommnadHandler:IRequestHandler<UpdateColumnCommnad,Colu
             throw new UnauthorizedAccessException("You don't have permission to update this Column.");
 
         _mapper.Map(request.UpdateColumnDto, column);
-        _columnRepository.UpdateAsync(column);
+        _columnRepository.Update(column);
         await _columnRepository.SaveChangesAsync();
 
         return _mapper.Map<ColumnDto>(column);
