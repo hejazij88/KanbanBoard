@@ -1,4 +1,4 @@
-﻿namespace KanbanBoard.Domain.Entities;
+﻿    namespace KanbanBoard.Domain.Entities;
 
 public class Attachment
 {
