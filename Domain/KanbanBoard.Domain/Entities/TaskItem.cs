@@ -1,8 +1,7 @@
 ﻿using KanbanBoard.Domain.Common;
 using KanbanBoard.Domain.Enums;
-using System.Net.Mail;
-using KanbanBoard.Domain.Entities;
-using Attachment = KanbanBoard.Domain.Entities.Attachment;
+
+namespace KanbanBoard.Domain.Entities;
 
 public class TaskItem : AuditableEntity
 {
@@ -41,5 +40,21 @@ public class TaskItem : AuditableEntity
         Priority = priority;
         ColumnId = columnId;
         Order = order;
+    }
+
+    public void MoveToColumn(Guid newColumnId, int newOrder)
+    {
+        ColumnId = newColumnId;
+        Order = newOrder;
+        DueDate = DateTime.UtcNow;
+
+    }
+
+    public void Reorder(int newOrder)
+    {
+        if (newOrder < 0)
+            throw new ArgumentException("Order must be non-negative.");
+        Order = newOrder;
+        UpdatedAt = DateTime.UtcNow;
     }
 }

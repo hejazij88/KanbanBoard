@@ -38,6 +38,13 @@ public class BoardColumn : AuditableEntity
         BoardId = boardId;
     }
 
+    public void SetOrder(int order)
+    {
+        if (order < 0)
+            throw new ArgumentException("Order must be non-negative.");
+        Order = order;
+    }
+
     public ICollection<TaskItem> Tasks
         = new List<TaskItem>();
 }

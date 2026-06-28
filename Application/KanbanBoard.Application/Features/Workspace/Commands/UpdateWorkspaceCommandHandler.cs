@@ -27,7 +27,7 @@ public class UpdateWorkspaceCommandHandler : IRequestHandler<UpdateWorkspaceComm
             throw new UnauthorizedAccessException("You don't have permission to update this workspace.");
 
         _mapper.Map(request.WorkspaceCommand, workspace);
-        _workspaceRepo.UpdateAsync(workspace);
+        _workspaceRepo.Update(workspace);
         await _workspaceRepo.SaveChangesAsync();
 
         return _mapper.Map<WorkspaceDto>(workspace);

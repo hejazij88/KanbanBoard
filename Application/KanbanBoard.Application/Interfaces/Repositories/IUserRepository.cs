@@ -1,4 +1,5 @@
 ﻿using KanbanBoard.Domain.Entities;
+using KanbanBoard.Domain.Enums;
 
 namespace KanbanBoard.Application.Interfaces.Repositories;
 

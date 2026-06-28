@@ -35,7 +35,7 @@ public class UpdateBoardCommandHandler : IRequestHandler<UpdateBoardCommand, Boa
             throw new UnauthorizedAccessException("You don't have permission to update this Board.");
 
         _mapper.Map(request.UpdateBoardDto, board);
-        _boardRepository.UpdateAsync(board);
+        _boardRepository.Update(board);
         await _boardRepository.SaveChangesAsync();
 
         return _mapper.Map<BoardDto>(board);

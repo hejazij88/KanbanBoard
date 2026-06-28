@@ -26,7 +26,7 @@ public class DeleteWorkspaceCommandHandler : IRequestHandler<DeleteWorkspaceComm
         if (workspace.OwnerId != userId)
             throw new UnauthorizedAccessException("Only the owner can delete the workspace.");
 
-        _workspaceRepo.DeleteAsync(workspace);
+        _workspaceRepo.Delete(workspace);
         await _workspaceRepo.SaveChangesAsync();
         return true;
     }
