@@ -47,5 +47,14 @@ public class TaskItem : AuditableEntity
         ColumnId = newColumnId;
         Order = newOrder;
         DueDate = DateTime.UtcNow;
+
+    }
+
+    public void Reorder(int newOrder)
+    {
+        if (newOrder < 0)
+            throw new ArgumentException("Order must be non-negative.");
+        Order = newOrder;
+        UpdatedAt = DateTime.UtcNow;
     }
 }
