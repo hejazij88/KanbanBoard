@@ -19,5 +19,5 @@ public interface IColumnRepository : IRepository<BoardColumn>
 
     Task ReorderColumnsAsync(Guid boardId, int oldOrder, int newOrder);
 
-    Task<IEnumerable<BoardColumn>> GetDefaultColumnsAsync(Guid boardId);
+    //Task<IEnumerable<BoardColumn>> GetDefaultColumnsAsync(Guid boardId);
 }

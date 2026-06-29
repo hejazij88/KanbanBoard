@@ -14,7 +14,7 @@ public class BoardColumnConfiguration
 
         builder.HasKey(x => x.Id);
 
-        builder.Property(x => x.Name)
+        builder.Property(x => x.Title)
             .HasMaxLength(100)
             .IsRequired();
 

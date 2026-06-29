@@ -2,8 +2,12 @@
 using KanbanBoard.Domain.Entities;
 using KanbanBoard.Domain.Enums;
 
-public class WorkspaceMember : BaseEntity
+public class WorkspaceMember 
 {
+
+
+    public Guid Id { get;private set; }
+    public DateTime JoinedAt { get;private set; }
     public Guid UserId { get; private set; }
 
     public User User { get; private set; } = null!;
@@ -18,13 +22,17 @@ public class WorkspaceMember : BaseEntity
     {
     }
 
-    public WorkspaceMember(
-        Guid userId,
-        Guid workspaceId,
-        WorkspaceRole role)
+    public WorkspaceMember(Workspace workspace, User user, WorkspaceRole role)
     {
-        UserId = userId;
-        WorkspaceId = workspaceId;
+        Id = Guid.NewGuid();
+        Workspace = workspace;
+        User = user;
+        Role = role;
+        JoinedAt = DateTime.UtcNow;
+    }
+
+    public void SetRole(WorkspaceRole role)
+    {
         Role = role;
     }
 }

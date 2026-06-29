@@ -17,16 +17,16 @@ public class UpdateWorkspaceCommandHandler : IRequestHandler<UpdateWorkspaceComm
 
     public async Task<WorkspaceDto> Handle(UpdateWorkspaceCommand request, CancellationToken cancellationToken)
     {
-        var workspace = await _workspaceRepo.GetByIdAsync(request.WorkspaceId);
+        var workspace = await _workspaceRepo.GetWorkspaceWithMembersAsync(request.WorkspaceId);
         if (workspace == null)
             throw new Exception("Workspace not found.");
 
-        // بررسی دسترسی (فقط Owner یا Admin)
         var userId = GetCurrentUserId();
         if (workspace.OwnerId != userId && !workspace.Members.Any(m => m.UserId == userId && m.Role == WorkspaceRole.Admin))
             throw new UnauthorizedAccessException("You don't have permission to update this workspace.");
 
-        _mapper.Map(request.WorkspaceCommand, workspace);
+        workspace.SetName(request.UpdateWorkspaceDto.Name);
+
         _workspaceRepo.Update(workspace);
         await _workspaceRepo.SaveChangesAsync();
 

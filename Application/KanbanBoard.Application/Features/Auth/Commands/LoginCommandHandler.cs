@@ -20,26 +20,24 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, AuthResponseDto
 
     public async Task<AuthResponseDto> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        var user = (await _userRepo.FindAsync(u => u.Email == request.LogInDto.Email)).FirstOrDefault();
+        var user = await _userRepo.GetUserByEmailAsync(request.LogInDto.Email);
         if (user == null || !VerifyPassword(request.LogInDto.Password, user.PasswordHash))
             throw new Exception("Invalid email or password.");
 
         var token = _jwtService.GenerateToken(user);
         var refreshToken = _jwtService.GenerateRefreshToken();
 
-        user.RefreshToken = refreshToken;
-        user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
+        user.SetRefreshToken(refreshToken, DateTime.UtcNow.AddDays(7));
         await _userRepo.SaveChangesAsync();
 
         return new AuthResponseDto
         {
             Id = user.Id,
-            Username = user.FullName,
+            Username = user.Username,
             Email = user.Email,
             Token = token,
             RefreshToken = refreshToken
         };
-        return null;
     }
 
     private bool VerifyPassword(string password, string storedHash)

@@ -27,14 +27,17 @@ public class CreateTaskCommandHandler : IRequestHandler<CreateTaskCommand, TaskD
             throw new Exception("Column not found.");
 
         var maxOrder = await _taskRepo.GetMaxOrderAsync(request.ColumnId);
+        var task = column.AddTask(
+            request.TaskDto.Title,
+            request.TaskDto.Description ?? string.Empty,
+            request.TaskDto.Priority,
+            request.TaskDto.AssignedUserId,
+            request.TaskDto.DueDate
+        );
 
-        var task = new TaskItem(request.TaskDto.Title, request.TaskDto.Description, request.TaskDto.Priority,
-            request.ColumnId, maxOrder + 1);
-
-        await _taskRepo.AddAsync(task);
         await _taskRepo.SaveChangesAsync();
 
-        var fullTask = await _taskRepo.GetTaskWithDetailsAsync(task.Id);
-        return _mapper.Map<TaskDto>(fullTask);
+        var result = await _taskRepo.GetTaskWithDetailsAsync(task.Id);
+        return _mapper.Map<TaskDto>(result);
     }
 }

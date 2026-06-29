@@ -25,7 +25,7 @@ public class TaskItemConfiguration
             .HasConversion<int>();
 
         builder.HasOne(x => x.Column)
-            .WithMany(x => x.Tasks)
+            .WithMany(x => x.TaskItems)
             .HasForeignKey(x => x.ColumnId);
 
         builder.HasOne(x => x.AssignedUser)

@@ -28,7 +28,7 @@ public class CreateColumnCommandHandler : IRequestHandler<CreateColumnCommand, C
 
         var maxOrder = await _columnRepo.GetMaxOrderAsync(request.BoardId);
 
-        var column = new BoardColumn(request.ColumnDto.Title, maxOrder + 1, request.BoardId);
+        var column = new BoardColumn(request.ColumnDto.Title, request.BoardId,maxOrder+1);
 
 
         await _columnRepo.AddAsync(column);

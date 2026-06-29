@@ -25,25 +25,23 @@ public class AddMemberCommandHandler : IRequestHandler<AddMemberCommand, Workspa
 
     public async Task<WorkspaceMemberDto> Handle(AddMemberCommand request, CancellationToken cancellationToken)
     {
-        var workspace = await _workspaceRepo.GetByIdAsync(request.WorkspaceId);
+        var workspace = await _workspaceRepo.GetWorkspaceWithMembersAsync(request.WorkspaceId);
         if (workspace == null)
             throw new Exception("Workspace not found.");
 
         var currentUserId = GetCurrentUserId();
-        // فقط Admin یا Owner می‌تواند عضو اضافه کند
         if (workspace.OwnerId != currentUserId && !workspace.Members.Any(m => m.UserId == currentUserId && m.Role == WorkspaceRole.Admin))
             throw new UnauthorizedAccessException("Only admins can add members.");
 
-        var user = (await _userRepo.FindAsync(u => u.Email == request.AddMemberDto.Email)).FirstOrDefault();
+        var user = await _userRepo.GetUserByEmailAsync(request.AddMemberDto.Email);
         if (user == null)
             throw new Exception("User not found.");
 
         if (workspace.Members.Any(m => m.UserId == user.Id))
             throw new Exception("User is already a member.");
 
-        var member = new WorkspaceMember(user.Id, workspace.Id, WorkspaceRole.Member);
-
-        workspace.Members.Add(member);
+        var member = new WorkspaceMember(workspace, user, request.AddMemberDto.Role);
+        workspace.AddMember(user, request.AddMemberDto.Role);
         await _workspaceRepo.SaveChangesAsync();
 
         return _mapper.Map<WorkspaceMemberDto>(member);

@@ -42,15 +42,9 @@ public class CreateAttachmentCommandHandler:IRequestHandler<CreateAttachmentComm
             await file.CopyToAsync(stream);
         }
 
-        var attachment = new Domain.Entities.Attachment()
-        {
-            Id = Guid.NewGuid(),
-            FileName = file.FileName,
-            FilePath = $"/uploads/attachments/{uniqueFileName}",
-            FileSize = file.Length,
-            TaskId = request.TaskId,
-            UploadedAt = DateTime.UtcNow
-        };
+        var attachment =
+            new Domain.Entities.Attachment(file.Name, filePath, file.Length, file.ContentType, request.TaskId);
+        
 
         await _attachmentRepo.AddAsync(attachment);
         await _attachmentRepo.SaveChangesAsync();

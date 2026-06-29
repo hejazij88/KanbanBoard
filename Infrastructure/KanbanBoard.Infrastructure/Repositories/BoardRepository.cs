@@ -15,13 +15,13 @@ public class BoardRepository : Repository<Board>, IBoardRepository
     {
         return await _dbSet
             .Include(b => b.Columns)
-            .ThenInclude(c => c.Tasks)
+            .ThenInclude(c => c.TaskItems)
             .ThenInclude(t => t.AssignedUser)
             .Include(b => b.Columns)
-            .ThenInclude(c => c.Tasks)
+            .ThenInclude(c => c.TaskItems)
             .ThenInclude(t => t.Comments)
             .Include(b => b.Columns)
-            .ThenInclude(c => c.Tasks)
+            .ThenInclude(c => c.TaskItems)
             .ThenInclude(t => t.Attachments)
             .FirstOrDefaultAsync(b => b.Id == boardId);
     }

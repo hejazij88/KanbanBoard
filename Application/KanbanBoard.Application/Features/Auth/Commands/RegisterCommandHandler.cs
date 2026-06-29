@@ -21,32 +21,34 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, AuthRespo
 
     public async Task<AuthResponseDto> Handle(RegisterCommand request, CancellationToken cancellationToken)
     {
-        // بررسی تکراری نبودن ایمیل
         var existing = await _userRepo.FindAsync(u => u.Email == request.RegisterDto.Email);
         if (existing.Any())
             throw new Exception("User with this email already exists.");
 
-        var user = new User(request.RegisterDto.UserName,request.RegisterDto.Email,HashPassword(request.RegisterDto.Password));
-        
+        var user = new User(
+            request.RegisterDto.UserName,
+            request.RegisterDto.Email,
+            HashPassword(request.RegisterDto.Password)
+        );
+
         await _userRepo.AddAsync(user);
         await _userRepo.SaveChangesAsync();
 
-        // تولید توکن
         var token = _jwtService.GenerateToken(user);
         var refreshToken = _jwtService.GenerateRefreshToken();
 
-        user.RefreshToken = refreshToken;
-        user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
+        user.SetRefreshToken(refreshToken, DateTime.UtcNow.AddDays(7));
         await _userRepo.SaveChangesAsync();
 
         return new AuthResponseDto
         {
             Id = user.Id,
-            Username = user.FullName,
+            Username = user.Username,
             Email = user.Email,
             Token = token,
             RefreshToken = refreshToken
         };
+
     }
 
     private string HashPassword(string password)
@@ -56,5 +58,5 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, AuthRespo
         var hash = sha256.ComputeHash(bytes);
         return Convert.ToBase64String(hash);
     }
-   
+
 }

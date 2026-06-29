@@ -4,33 +4,74 @@ namespace KanbanBoard.Domain.Entities;
 
 public class User : AuditableEntity
 {
-    public string FullName { get; private set; }
+    public string Username { get; private set; }
 
     public string Email { get; private set; }
 
     public string PasswordHash { get; private set; }
-    public string? RefreshToken { get; set; }
+    public string? RefreshToken { get;private set; }
     public DateTime? RefreshTokenExpiryTime { get; set; }
+
+    private readonly List<WorkspaceMember> _workspaceMembers = new();
+    public IReadOnlyCollection<WorkspaceMember> WorkspaceMembers => _workspaceMembers.AsReadOnly();
+
+    private readonly List<TaskItem> _assignedTasks = new();
+    public IReadOnlyCollection<TaskItem> AssignedTasks => _assignedTasks.AsReadOnly();
+
+    private readonly List<Comment> _comments = new();
+    public IReadOnlyCollection<Comment> Comments => _comments.AsReadOnly();
 
     private User()
     {
     }
 
     public User(
-        string fullName,
+        string username,
         string email,
         string passwordHash)
     {
-        FullName = fullName;
+        Username = username;
         Email = email;
         PasswordHash = passwordHash;
     }
 
-    public ICollection<WorkspaceMember> Workspaces
-        = new List<WorkspaceMember>();
+    public void SetUsername(string username)
+    {
+        if (string.IsNullOrWhiteSpace(username))
+            throw new ArgumentException("Username cannot be empty.");
+        Username = username;
+    }
+    public void SetEmail(string email)
+    {
+        if (!IsValidEmail(email))
+            throw new ArgumentException("Invalid email format.");
+        Email = email;
+    }
 
-    public ICollection<TaskItem> AssignedTasks
-        = new List<TaskItem>();
+    public void SetRefreshToken(string? refreshToken, DateTime? expiryTime)
+    {
+        RefreshToken = refreshToken;
+        RefreshTokenExpiryTime = expiryTime;
+    }
 
-    public ICollection<Comment> Comments { get; set; } = new List<Comment>();
+    public void AddWorkspaceMember(WorkspaceMember member)
+    {
+        if (_workspaceMembers.Any(m => m.UserId == member.UserId && m.WorkspaceId == member.WorkspaceId))
+            throw new InvalidOperationException("User is already a member of this workspace.");
+        _workspaceMembers.Add(member);
+    }
+    private bool IsValidEmail(string email)
+    {
+        try
+        {
+            var addr = new System.Net.Mail.MailAddress(email);
+            return addr.Address == email;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+
 }
