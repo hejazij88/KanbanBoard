@@ -24,20 +24,13 @@ public class CreateWorkspaceCommandHandler : IRequestHandler<CreateWorkspaceComm
     public async Task<WorkspaceDto> Handle(CreateWorkspaceCommand request, CancellationToken cancellationToken)
     {
         var userId = GetCurrentUserId();
-
-        var workspace = _mapper.Map < KanbanBoard.Domain.Entities.Workspace> (request.WorkspaceDto);
-        workspace.OwnerId = userId;
-        workspace.CreatedAt = DateTime.UtcNow;
-
-        workspace.Members = new List<WorkspaceMember>
-        {
-            new WorkspaceMember(Guid.NewGuid(),userId,WorkspaceRole.Admin)
-        };
+        var workspace = new Domain.Entities.Workspace(request.WorkspaceDto.Name, userId);
 
         await _workspaceRepo.AddAsync(workspace);
         await _workspaceRepo.SaveChangesAsync();
 
-        return _mapper.Map<WorkspaceDto>(workspace);
+        var result = await _workspaceRepo.GetWorkspaceWithMembersAsync(workspace.Id);
+        return _mapper.Map<WorkspaceDto>(result);
     }
 
     private Guid GetCurrentUserId()
