@@ -43,7 +43,7 @@ public class Board : AuditableEntity
         if (column == null)
             throw new InvalidOperationException("Column not found.");
 
-        if (column.Tasks.Any())
+        if (column.TaskItems.Any())
             throw new InvalidOperationException("Cannot delete a column with tasks.");
 
         _columns.Remove(column);

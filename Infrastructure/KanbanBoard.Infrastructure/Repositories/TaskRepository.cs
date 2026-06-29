@@ -105,7 +105,7 @@ public class TaskRepository : Repository<TaskItem>, ITaskRepository
             .Where(t => t.Column.BoardId == boardId &&
                         (t.Title.ToLower().Contains(searchTerm) ||
                          t.Description.ToLower().Contains(searchTerm) ||
-                         (t.AssignedUser != null && t.AssignedUser.FullName.ToLower().Contains(searchTerm))))
+                         (t.AssignedUser != null && t.AssignedUser.Username.ToLower().Contains(searchTerm))))
             .OrderBy(t => t.Column.Order)
             .ThenBy(t => t.Order)
             .ToListAsync();

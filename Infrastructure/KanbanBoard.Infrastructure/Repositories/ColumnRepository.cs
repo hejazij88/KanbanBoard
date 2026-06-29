@@ -14,11 +14,11 @@ public class ColumnRepository : Repository<BoardColumn>, IColumnRepository
     public async Task<BoardColumn?> GetColumnWithTasksAsync(Guid columnId)
     {
         return await _dbSet
-            .Include(c => c.Tasks)
+            .Include(c => c.TaskItems)
             .ThenInclude(t => t.AssignedUser)
-            .Include(c => c.Tasks)
+            .Include(c => c.TaskItems)
             .ThenInclude(t => t.Comments)
-            .Include(c => c.Tasks)
+            .Include(c => c.TaskItems)
             .ThenInclude(t => t.Attachments)
             .FirstOrDefaultAsync(c => c.Id == columnId);
     }
@@ -26,7 +26,7 @@ public class ColumnRepository : Repository<BoardColumn>, IColumnRepository
     public async Task<IEnumerable<BoardColumn>> GetColumnsByBoardWithTasksAsync(Guid boardId)
     {
         return await _dbSet
-            .Include(c => c.Tasks)
+            .Include(c => c.TaskItems)
             .ThenInclude(t => t.AssignedUser)
             .Where(c => c.BoardId == boardId)
             .OrderBy(c => c.Order)
@@ -78,15 +78,15 @@ public class ColumnRepository : Repository<BoardColumn>, IColumnRepository
         _dbSet.UpdateRange(sorted);
     }
 
-    public async Task<IEnumerable<BoardColumn>> GetDefaultColumnsAsync(Guid boardId)
-    {
-        var defaultColumns = new[]
-        {
-            new BoardColumn("Todo",1, boardId),
-            new BoardColumn("In Progress",2, boardId),
-            new BoardColumn("Done", 3, boardId)
-        };
+    //public async Task<IEnumerable<BoardColumn>> GetDefaultColumnsAsync(Guid boardId)
+    //{
+    //    var defaultColumns = new[]
+    //    {
+    //        new BoardColumn("Todo",1, boardId),
+    //        new BoardColumn("In Progress",2, boardId),
+    //        new BoardColumn("Done", 3, boardId)
+    //    };
 
-        return defaultColumns;
-    }
+    //    return defaultColumns;
+    //}
 }
