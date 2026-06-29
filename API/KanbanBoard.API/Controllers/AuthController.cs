@@ -63,5 +63,16 @@ namespace KanbanBoard.API.Controllers
                 return BadRequest(new { message = e.Message });
             }
         }
+
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("access_token");
+            Response.Cookies.Delete("refresh_token");
+            return Ok(new { message = "Logout Is Successfully" });
+        }
+
+
+
     }
 }
