@@ -88,5 +88,20 @@ namespace KanbanBoard.API.Controllers
             }
         }
 
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteWorkspace(Guid id)
+        {
+            try
+            {
+                var command = new DeleteWorkspaceCommand { Id = id };
+                await _mediator.Send(command);
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { message = e.Message });
+            }
+        }
     }
 }
