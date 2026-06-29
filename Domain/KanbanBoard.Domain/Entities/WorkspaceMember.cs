@@ -2,7 +2,7 @@
 using KanbanBoard.Domain.Entities;
 using KanbanBoard.Domain.Enums;
 
-public class WorkspaceMember : BaseEntity
+public class WorkspaceMember : AuditableEntity
 {
     public Guid UserId { get; private set; }
 

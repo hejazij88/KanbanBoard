@@ -4,12 +4,12 @@ namespace KanbanBoard.Domain.Entities;
 
 public class User : AuditableEntity
 {
-    public string FullName { get; private set; }
+    public string Username { get; private set; }
 
     public string Email { get; private set; }
 
     public string PasswordHash { get; private set; }
-    public string? RefreshToken { get; set; }
+    public string? RefreshToken { get;private set; }
     public DateTime? RefreshTokenExpiryTime { get; set; }
 
     private readonly List<WorkspaceMember> _workspaceMembers = new();
@@ -26,11 +26,11 @@ public class User : AuditableEntity
     }
 
     public User(
-        string fullName,
+        string username,
         string email,
         string passwordHash)
     {
-        FullName = fullName;
+        Username = username;
         Email = email;
         PasswordHash = passwordHash;
     }
@@ -39,7 +39,7 @@ public class User : AuditableEntity
     {
         if (string.IsNullOrWhiteSpace(username))
             throw new ArgumentException("Username cannot be empty.");
-        FullName = username;
+        Username = username;
     }
     public void SetEmail(string email)
     {
