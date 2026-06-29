@@ -48,5 +48,20 @@ namespace KanbanBoard.API.Controllers
                 return BadRequest(new { message = e.Message });
             }
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Login([FromBody] LoginCommand loginCommand)
+        {
+            try
+            {
+                var result = await _mediator.Send(loginCommand);
+                SetTokenCookies(result.Token, result.RefreshToken);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { message = e.Message });
+            }
+        }
     }
 }
