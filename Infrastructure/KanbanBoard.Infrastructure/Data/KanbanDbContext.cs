@@ -34,32 +34,7 @@ public class KanbanDbContext : DbContext
 
     private void ConfigureEntities(ModelBuilder modelBuilder)
     {
-        // 1. تنظیمات User
         ConfigureUser(modelBuilder);
-
-        // 2. تنظیمات Workspace
-        ConfigureWorkspace(modelBuilder);
-
-        // 3. تنظیمات WorkspaceMember
-        ConfigureWorkspaceMember(modelBuilder);
-
-        // 4. تنظیمات Board
-        ConfigureBoard(modelBuilder);
-
-        // 5. تنظیمات BoardColumn
-        ConfigureBoardColumn(modelBuilder);
-
-        // 6. تنظیمات TaskItem
-        ConfigureTaskItem(modelBuilder);
-
-        // 7. تنظیمات Comment
-        ConfigureComment(modelBuilder);
-
-        // 8. تنظیمات Attachment
-        ConfigureAttachment(modelBuilder);
-
-        // 9. اعمال Value Conversions برای Enums
-        ApplyEnumConversions(modelBuilder);
     }
 
     #region Entity Configurations
@@ -75,7 +50,7 @@ public class KanbanDbContext : DbContext
             entity.HasKey(u => u.Id);
 
             // Properties
-            entity.Property(u => u.FullName)
+            entity.Property(u => u.Username)
                 .IsRequired()
                 .HasMaxLength(100);
 
@@ -99,7 +74,7 @@ public class KanbanDbContext : DbContext
                 .IsUnique()
                 .HasDatabaseName("IX_Users_Email");
 
-            entity.HasIndex(u => u.FullName)
+            entity.HasIndex(u => u.Username)
                 .IsUnique()
                 .HasDatabaseName("IX_Users_Username");
 
@@ -125,11 +100,7 @@ public class KanbanDbContext : DbContext
                 .WithOne(c => c.User)
                 .HasForeignKey(c => c.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
-        });
-    }
-
-    private void ConfigureWorkspace(ModelBuilder modelBuilder)
-    {
+     
         modelBuilder.Entity<Workspace>(entity =>
         {
             entity.ToTable("Workspaces");
@@ -165,11 +136,7 @@ public class KanbanDbContext : DbContext
                 .WithOne(b => b.Workspace)
                 .HasForeignKey(b => b.WorkspaceId)
                 .OnDelete(DeleteBehavior.Cascade);
-        });
-    }
-
-    private void ConfigureWorkspaceMember(ModelBuilder modelBuilder)
-    {
+     
         modelBuilder.Entity<WorkspaceMember>(entity =>
         {
             entity.ToTable("WorkspaceMembers");
@@ -197,11 +164,7 @@ public class KanbanDbContext : DbContext
                 .WithMany(u => u.WorkspaceMembers)
                 .HasForeignKey(wm => wm.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
-        });
-    }
-
-    private void ConfigureBoard(ModelBuilder modelBuilder)
-    {
+     
         modelBuilder.Entity<Board>(entity =>
         {
             entity.ToTable("Boards");
@@ -229,18 +192,14 @@ public class KanbanDbContext : DbContext
                 .WithOne(c => c.Board)
                 .HasForeignKey(c => c.BoardId)
                 .OnDelete(DeleteBehavior.Cascade);
-        });
-    }
-
-    private void ConfigureBoardColumn(ModelBuilder modelBuilder)
-    {
+     
         modelBuilder.Entity<BoardColumn>(entity =>
         {
             entity.ToTable("BoardColumns");
 
             entity.HasKey(c => c.Id);
 
-            entity.Property(c => c.Name)
+            entity.Property(c => c.Title)
                 .IsRequired()
                 .HasMaxLength(100);
 
@@ -258,15 +217,11 @@ public class KanbanDbContext : DbContext
                 .HasForeignKey(c => c.BoardId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            entity.HasMany(c => c.Tasks)
+            entity.HasMany(c => c.TaskItems)
                 .WithOne(t => t.Column)
                 .HasForeignKey(t => t.ColumnId)
                 .OnDelete(DeleteBehavior.Cascade);
-        });
-    }
-
-    private void ConfigureTaskItem(ModelBuilder modelBuilder)
-    {
+     
         modelBuilder.Entity<TaskItem>(entity =>
         {
             entity.ToTable("Tasks");
@@ -316,7 +271,7 @@ public class KanbanDbContext : DbContext
 
             // Relationships
             entity.HasOne(t => t.Column)
-                .WithMany(c => c.Tasks)
+                .WithMany(c => c.TaskItems)
                 .HasForeignKey(t => t.ColumnId)
                 .OnDelete(DeleteBehavior.Cascade);
 
@@ -334,11 +289,7 @@ public class KanbanDbContext : DbContext
                 .WithOne(a => a.Task)
                 .HasForeignKey(a => a.TaskId)
                 .OnDelete(DeleteBehavior.Cascade);
-        });
-    }
-
-    private void ConfigureComment(ModelBuilder modelBuilder)
-    {
+     
         modelBuilder.Entity<Comment>(entity =>
         {
             entity.ToTable("Comments");
@@ -369,11 +320,9 @@ public class KanbanDbContext : DbContext
                 .WithMany(u => u.Comments)
                 .HasForeignKey(c => c.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
-        });
-    }
+     
 
-    private void ConfigureAttachment(ModelBuilder modelBuilder)
-    {
+    
         modelBuilder.Entity<Attachment>(entity =>
         {
             entity.ToTable("Attachments");
