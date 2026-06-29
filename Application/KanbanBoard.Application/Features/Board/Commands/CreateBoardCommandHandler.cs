@@ -25,7 +25,7 @@ public class CreateBoardCommandHandler : IRequestHandler<CreateBoardCommand, Boa
     public async Task<BoardDto> Handle(CreateBoardCommand request, CancellationToken cancellationToken)
     {
         var userId = GetCurrentUserId();
-        var workspace = await _workspaceRepo.GetByIdAsync(request.BoardDto.WorkspaceId);
+        var workspace = await _workspaceRepo.GetWorkspaceWithMembersAsync(request.BoardDto.WorkspaceId);
         if (workspace == null)
             throw new Exception("Workspace not found.");
 
@@ -37,7 +37,8 @@ public class CreateBoardCommandHandler : IRequestHandler<CreateBoardCommand, Boa
         await _boardRepo.AddAsync(board);
         await _boardRepo.SaveChangesAsync();
 
-        return _mapper.Map<BoardDto>(board);
+        var result = await _boardRepo.GetBoardWithColumnsAndTasksAsync(board.Id);
+        return _mapper.Map<BoardDto>(result);
     }
 
     private Guid GetCurrentUserId()
