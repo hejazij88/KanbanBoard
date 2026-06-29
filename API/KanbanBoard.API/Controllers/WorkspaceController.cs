@@ -71,5 +71,22 @@ namespace KanbanBoard.API.Controllers
             }
         }
 
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> UpdateWorkspace(Guid id, [FromBody] UpdateWorkspaceCommand workspaceCommand)
+        {
+
+            if (id != workspaceCommand.WorkspaceId)
+                return BadRequest("ID Mismatch");
+            try
+            {
+                var result = await _mediator.Send(workspaceCommand);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { message = e.Message });
+            }
+        }
+
     }
 }
