@@ -15,6 +15,6 @@ public interface IUserRepository : IRepository<User>
 
     Task<IEnumerable<User>> GetUsersByWorkspaceRoleAsync(Guid workspaceId, string role);
 
-    Task<IEnumerable<User>> GetUsersNotInWorkspaceAsync(Guid workspaceId);
+    Task<IEnumerable<User>> GetUsersNotInWorkspaceAsync(Guid workspaceId);                      
 
 }
