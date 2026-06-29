@@ -21,27 +21,52 @@ public class TaskItem : AuditableEntity
 
     public User? AssignedUser { get; private set; }
 
-    public ICollection<Comment> Comments { get; set; } = new List<Comment>();
-    public ICollection<Attachment> Attachments { get; set; } = new List<Attachment>();
+    private readonly List<Comment> _comments = new();
+    public IReadOnlyCollection<Comment> Comments => _comments.AsReadOnly();
+
+    private readonly List<Attachment> _attachments = new();
+    public IReadOnlyCollection<Attachment> Attachments => _attachments.AsReadOnly();
 
     private TaskItem()
     {
     }
 
-    public TaskItem(
-        string title,
-        string description,
-        Priority priority,
-        Guid columnId,
-        int order)
+    public TaskItem(string title, string description, Priority priority, Guid columnId, int order)
     {
+        Id = Guid.NewGuid();
         Title = title;
         Description = description;
         Priority = priority;
         ColumnId = columnId;
         Order = order;
+        CreatedAt = DateTime.UtcNow;
+    }
+    public void UpdateDetails(string title, string description, Priority priority, DateTime? dueDate)
+    {
+        Title = title;
+        Description = description;
+        Priority = priority;
+        DueDate = dueDate;
+        UpdatedAt = DateTime.UtcNow;
     }
 
+    public void AssignToUser(Guid userId)
+    {
+        AssignedUserId = userId;
+        UpdatedAt = DateTime.UtcNow;
+    }
+
+    public void UnassignUser()
+    {
+        AssignedUserId = null;
+        UpdatedAt = DateTime.UtcNow;
+    }
+
+    public void SetDueDate(DateTime dueDate)
+    {
+        DueDate = dueDate;
+        UpdatedAt = DateTime.UtcNow;
+    }
     public void MoveToColumn(Guid newColumnId, int newOrder)
     {
         ColumnId = newColumnId;
@@ -55,6 +80,18 @@ public class TaskItem : AuditableEntity
         if (newOrder < 0)
             throw new ArgumentException("Order must be non-negative.");
         Order = newOrder;
+        UpdatedAt = DateTime.UtcNow;
+    }
+
+    public void AddComment(Comment comment)
+    {
+        _comments.Add(comment);
+        UpdatedAt = DateTime.UtcNow;
+    }
+
+    public void AddAttachment(Attachment attachment)
+    {
+        _attachments.Add(attachment);
         UpdatedAt = DateTime.UtcNow;
     }
 }
