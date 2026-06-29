@@ -14,7 +14,7 @@ public class WorkspaceMemberConfiguration
         builder.HasKey(x => x.Id);
 
         builder.HasOne(x => x.User)
-            .WithMany(x => x.Workspaces)
+            .WithMany(x => x.WorkspaceMembers)
             .HasForeignKey(x => x.UserId);
 
         builder.HasOne(x => x.Workspace)

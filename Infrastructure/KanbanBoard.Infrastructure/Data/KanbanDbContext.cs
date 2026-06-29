@@ -111,7 +111,7 @@ public class KanbanDbContext : DbContext
                 .IsRequired(false);
 
             // Ignore navigation collections (EF Core will manage them)
-            entity.HasMany(u => u.Workspaces)
+            entity.HasMany(u => u.WorkspaceMembers)
                 .WithOne(wm => wm.User)
                 .HasForeignKey(wm => wm.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
@@ -194,7 +194,7 @@ public class KanbanDbContext : DbContext
                 .OnDelete(DeleteBehavior.Cascade);
 
             entity.HasOne(wm => wm.User)
-                .WithMany(u => u.Workspaces)
+                .WithMany(u => u.WorkspaceMembers)
                 .HasForeignKey(wm => wm.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
         });

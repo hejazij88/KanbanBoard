@@ -15,7 +15,7 @@ public class UserRepository : Repository<User>, IUserRepository
         await _dbSet.FirstOrDefaultAsync(u => u.Email == email);
 
 
-    public async Task<User?> GetUserWithDetailsAsync(Guid userId) => await _dbSet.Include(u => u.Workspaces)
+    public async Task<User?> GetUserWithDetailsAsync(Guid userId) => await _dbSet.Include(u => u.WorkspaceMembers)
         .ThenInclude(w => w.Workspace).Include(u => u.AssignedTasks).Include(u => u.Comments)
         .FirstOrDefaultAsync(u => u.Id == userId);
 
@@ -35,13 +35,13 @@ public class UserRepository : Repository<User>, IUserRepository
     public async Task<IEnumerable<User>> GetUsersByWorkspaceRoleAsync(Guid workspaceId, string role)
     {
 
-        return _dbSet.Where(u => u.Workspaces.Any(wm => wm.WorkspaceId == workspaceId && wm.Role.ToString() == role));
+        return _dbSet.Where(u => u.WorkspaceMembers.Any(wm => wm.WorkspaceId == workspaceId && wm.Role.ToString() == role));
     }
 
     public async Task<IEnumerable<User>> GetUsersNotInWorkspaceAsync(Guid workspaceId)
     {
         return await _dbSet
-            .Where(u => !u.Workspaces.Any(wm => wm.WorkspaceId == workspaceId))
+            .Where(u => !u.WorkspaceMembers.Any(wm => wm.WorkspaceId == workspaceId))
             .ToListAsync();
     }
 }
