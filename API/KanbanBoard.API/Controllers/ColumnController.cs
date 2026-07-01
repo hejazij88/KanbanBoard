@@ -27,6 +27,17 @@ namespace KanbanBoard.API.Controllers
             var result = await _mediator.Send(query);
             return Ok(result);
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetColumnById(Guid id)
+        {
+            var query = new GetColumnByIdQuery { Id = id };
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
+
+
+
         [HttpPost("board/{boardId}")]
         public async Task<IActionResult> CreateColumn(Guid boardId, [FromBody] CreateColumnCommand command)
         {
