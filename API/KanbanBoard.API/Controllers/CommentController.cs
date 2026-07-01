@@ -1,4 +1,5 @@
-﻿using KanbanBoard.Application.Features.Comment.Queries;
+﻿using KanbanBoard.Application.Features.Comment.Commands;
+using KanbanBoard.Application.Features.Comment.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -24,6 +25,22 @@ namespace KanbanBoard.API.Controllers
             var query = new GetCommentsByTaskQuery { TaskId = taskId };
             var result = await _mediator.Send(query);
             return Ok(result);
+        }
+
+
+        [HttpPost("task/{taskId}")]
+        public async Task<IActionResult> CreateComment(Guid taskId, [FromBody] CreateCommentCommand command)
+        {
+            command.CreateCommentDto.TaskId = taskId;
+            try
+            {
+                var result = await _mediator.Send(command);
+                return CreatedAtAction(nameof(GetCommentsByTask), new { taskId = result.TaskId }, result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
     }
 }
