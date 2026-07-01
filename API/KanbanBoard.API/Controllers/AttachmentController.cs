@@ -1,4 +1,5 @@
-﻿using KanbanBoard.Application.Features.Attachment.Queries;
+﻿using KanbanBoard.Application.Features.Attachment.Commands;
+using KanbanBoard.Application.Features.Attachment.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -24,6 +25,21 @@ namespace KanbanBoard.API.Controllers
             var query = new GetAttachmentsByTaskQuery { TaskId = taskId };
             var result = await _mediator.Send(query);
             return Ok(result);
+        }
+
+        [HttpPost("task/{taskId}")]
+        public async Task<IActionResult> UploadAttachment(Guid taskId, [FromForm] CreateAttachmentCommand command)
+        {
+            command.TaskId = taskId;
+            try
+            {
+                var result = await _mediator.Send(command);
+                return CreatedAtAction(nameof(GetAttachmentsByTask), new { taskId = result.TaskId }, result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
     }
 }
