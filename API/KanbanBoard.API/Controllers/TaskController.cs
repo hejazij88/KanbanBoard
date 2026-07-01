@@ -84,6 +84,20 @@ namespace KanbanBoard.API.Controllers
             }
         }
 
+        [HttpPost("move")]
+        public async Task<IActionResult> MoveTask([FromBody] MoveTaskCommand command)
+        {
+            try
+            {
+                await _mediator.Send(command);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
 
     }
 }
