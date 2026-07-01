@@ -52,5 +52,24 @@ namespace KanbanBoard.API.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
+
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateColumn(Guid id, [FromBody] UpdateColumnCommnad command)
+        {
+            if (id != command.ColumnId)
+                return BadRequest("ID mismatch");
+
+            try
+            {
+                var result = await _mediator.Send(command);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
     }
 }
