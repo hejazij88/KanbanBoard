@@ -103,5 +103,36 @@ namespace KanbanBoard.API.Controllers
                 return BadRequest(new { message = e.Message });
             }
         }
+
+
+        [HttpPost("{workspaceId}/members")]
+        public async Task<IActionResult> AddMember(Guid workspaceId, [FromBody] AddMemberCommand command)
+        {
+            command.WorkspaceId = workspaceId;
+            try
+            {
+                var result = await _mediator.Send(command);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpDelete("{workspaceId}/members/{userId}")]
+        public async Task<IActionResult> RemoveMember(Guid workspaceId, Guid userId)
+        {
+            try
+            {
+                var command = new RemoveWorkspaceMemberCommand() { WorkSpaceId = workspaceId, MemberId = userId };
+                await _mediator.Send(command);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
     }
 }
