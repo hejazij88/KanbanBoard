@@ -1,4 +1,5 @@
-﻿using KanbanBoard.Application.DTOs.Column;
+﻿using KanbanBoard.Application.DTOs.Board;
+using KanbanBoard.Application.DTOs.Column;
 using MediatR;
 
 namespace KanbanBoard.Application.Features.Column.Queries;

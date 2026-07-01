@@ -34,7 +34,7 @@ namespace KanbanBoard.API.Controllers
             try
             {
                 var result = await _mediator.Send(command);
-                //return CreatedAtAction(nameof(GetColumnById), new { id = result.Id }, result);
+                return CreatedAtAction(nameof(GetColumnById), new { id = result.Id }, result);
             }
             catch (Exception ex)
             {
