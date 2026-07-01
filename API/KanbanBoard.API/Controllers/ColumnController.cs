@@ -71,5 +71,21 @@ namespace KanbanBoard.API.Controllers
             }
         }
 
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteColumn(Guid id)
+        {
+            try
+            {
+                var command = new DeleteColumnCommand { ColumnId = id };
+                await _mediator.Send(command);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
     }
 }
