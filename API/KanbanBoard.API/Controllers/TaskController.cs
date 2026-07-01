@@ -25,5 +25,13 @@ namespace KanbanBoard.API.Controllers
             var result = await _mediator.Send(query);
             return Ok(result);
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetTaskById(Guid id)
+        {
+            var query = new GetTaskByIdQuery { TaskId = id };
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
     }
 }
