@@ -1,4 +1,5 @@
-﻿using KanbanBoard.Application.Features.Task.Queries;
+﻿using KanbanBoard.Application.Features.Task.Commands;
+using KanbanBoard.Application.Features.Task.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -32,6 +33,22 @@ namespace KanbanBoard.API.Controllers
             var query = new GetTaskByIdQuery { TaskId = id };
             var result = await _mediator.Send(query);
             return Ok(result);
+        }
+
+
+        [HttpPost("column/{columnId}")]
+        public async Task<IActionResult> CreateTask(Guid columnId, [FromBody] CreateTaskCommand command)
+        {
+            command.ColumnId = columnId;
+            try
+            {
+                var result = await _mediator.Send(command);
+                return CreatedAtAction(nameof(GetTaskById), new { id = result.Id }, result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
     }
 }
