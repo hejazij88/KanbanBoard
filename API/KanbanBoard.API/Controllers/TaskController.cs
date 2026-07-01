@@ -54,7 +54,7 @@ namespace KanbanBoard.API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateTask(Guid id, [FromBody] UpdateTaskCommand command)
         {
-            if (id != command.TaskId)
+            if (id != command.Id)
                 return BadRequest("ID mismatch");
 
             try
@@ -67,5 +67,7 @@ namespace KanbanBoard.API.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
+
+
     }
 }
