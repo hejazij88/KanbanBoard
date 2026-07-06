@@ -7,4 +7,10 @@
     <BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Blazor.LocalStorage" Version="10.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="10.0.9" />
+    <PackageReference Include="MudBlazor" Version="9.6.0" />
+  </ItemGroup>
+
 </Project>
