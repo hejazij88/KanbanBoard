@@ -6,9 +6,6 @@ using KanbanBoard.Application.DTOs.Column;
 using KanbanBoard.Application.DTOs.Comment;
 using KanbanBoard.Application.DTOs.Task;
 using KanbanBoard.Application.DTOs.Workspace;
-using System.Data.Common;
-using System.Net.Mail;
-using System.Xml.Linq;
 using KanbanBoard.Domain.Entities;
 using Attachment = KanbanBoard.Domain.Entities.Attachment;
 
