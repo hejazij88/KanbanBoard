@@ -169,7 +169,7 @@ public abstract class BaseApiService
     /// <summary>
     /// پردازش خطاهای پاسخ
     /// </summary>
-    private async Task HandleErrorResponseAsync(HttpResponseMessage response)
+    protected virtual async Task HandleErrorResponseAsync(HttpResponseMessage response)
     {
         var errorContent = await response.Content.ReadAsStringAsync();
         _logger.LogError("API Error: {StatusCode} - {Error}", response.StatusCode, errorContent);
