@@ -13,4 +13,9 @@
     <PackageReference Include="MudBlazor" Version="9.6.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Application\KanbanBoard.Application\KanbanBoard.Application.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\KanbanBoard.Infrastructure\KanbanBoard.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

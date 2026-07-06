@@ -1,3 +1,5 @@
+using KanbanBoard.Application.Interfaces.Services;
+using KanbanBoard.Infrastructure.Services;
 using KanbanBoard.Presentation.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor.Services;
@@ -18,6 +20,9 @@ builder.Services.AddHttpClient("KanbanAPI", client =>
 {
     client.BaseAddress = new Uri("https://localhost:5001/"); // бояс API
 });
+
+builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
