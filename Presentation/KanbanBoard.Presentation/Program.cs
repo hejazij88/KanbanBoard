@@ -42,4 +42,6 @@ app.MapStaticAssets();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
+app.MapBlazorHub();
+
 app.Run();
