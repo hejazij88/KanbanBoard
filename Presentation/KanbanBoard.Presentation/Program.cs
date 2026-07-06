@@ -1,6 +1,7 @@
 using KanbanBoard.Application.Interfaces.Services;
 using KanbanBoard.Infrastructure.Services;
 using KanbanBoard.Presentation.Components;
+using KanbanBoard.Presentation.Configuration;
 using KanbanBoard.Presentation.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor.Services;
@@ -16,10 +17,14 @@ builder.Services.AddMudServices();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 builder.Services.AddAuthorizationCore();
 
-builder.Services.AddScoped<ApiService>();
+var apiSettings = builder.Configuration.GetSection("ApiSettings").Get<ApiSettings>()
+                  ?? throw new InvalidOperationException("ApiSettings section is missing.");
+
+builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection("ApiSettings"));
+
 builder.Services.AddHttpClient("KanbanAPI", client =>
 {
-    client.BaseAddress = new Uri("https://localhost:5001/"); // бояс API
+    client.BaseAddress = new Uri(apiSettings.BaseUrl);
 });
 
 builder.Services.AddScoped<IJwtService, JwtService>();
