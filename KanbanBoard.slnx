@@ -3,4 +3,5 @@
   <Project Path="Application/KanbanBoard.Application/KanbanBoard.Application.csproj" Id="d0acf966-dd96-4bb6-b0f0-2ade0b5e782e" />
   <Project Path="Domain/KanbanBoard.Domain/KanbanBoard.Domain.csproj" />
   <Project Path="Infrastructure/KanbanBoard.Infrastructure/KanbanBoard.Infrastructure.csproj" Id="2961be85-99bc-441b-aa82-600b50970c48" />
+  <Project Path="Presentation/KanbanBoard.Presentation/KanbanBoard.Presentation.csproj" Id="a36712a1-513b-4241-8174-83fcfd0350cd" />
 </Solution>
