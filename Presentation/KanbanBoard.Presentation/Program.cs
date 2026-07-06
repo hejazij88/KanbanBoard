@@ -13,6 +13,12 @@ builder.Services.AddMudServices();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 builder.Services.AddAuthorizationCore();
 
+builder.Services.AddScoped<ApiService>();
+builder.Services.AddHttpClient("KanbanAPI", client =>
+{
+    client.BaseAddress = new Uri("https://localhost:5001/"); // бояс API
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
