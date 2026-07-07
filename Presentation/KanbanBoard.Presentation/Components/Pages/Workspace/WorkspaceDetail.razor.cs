@@ -1,5 +1,6 @@
 ﻿using KanbanBoard.Application.DTOs.Board;
 using KanbanBoard.Application.DTOs.Workspace;
+using KanbanBoard.Presentation.Components.Pages.Workspace.Components;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 

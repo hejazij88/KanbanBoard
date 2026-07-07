@@ -1,4 +1,5 @@
 ﻿using KanbanBoard.Application.DTOs.Workspace;
+using KanbanBoard.Presentation.Components.Pages.Workspace.Components;
 using MudBlazor;
 
 namespace KanbanBoard.Presentation.Components.Pages.Workspace;
