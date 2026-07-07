@@ -30,6 +30,63 @@ builder.Services.AddHttpClient("KanbanAPI", client =>
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddHttpContextAccessor();
 
+builder.Services.AddScoped<AuthApiService>(sp =>
+{
+    var httpClient = sp.GetRequiredService<IHttpClientFactory>().CreateClient("KanbanAPI");
+    var authProvider = sp.GetRequiredService<AuthenticationStateProvider>();
+    var logger = sp.GetRequiredService<ILogger<AuthApiService>>();
+    return new AuthApiService(httpClient, authProvider, logger);
+});
+
+builder.Services.AddScoped<WorkspaceApiService>(sp =>
+{
+    var httpClient = sp.GetRequiredService<IHttpClientFactory>().CreateClient("KanbanAPI");
+    var authProvider = sp.GetRequiredService<AuthenticationStateProvider>();
+    var logger = sp.GetRequiredService<ILogger<WorkspaceApiService>>();
+    return new WorkspaceApiService(httpClient, authProvider, logger);
+});
+
+builder.Services.AddScoped<BoardApiService>(sp =>
+{
+    var httpClient = sp.GetRequiredService<IHttpClientFactory>().CreateClient("KanbanAPI");
+    var authProvider = sp.GetRequiredService<AuthenticationStateProvider>();
+    var logger = sp.GetRequiredService<ILogger<BoardApiService>>();
+    return new BoardApiService(httpClient, authProvider, logger);
+});
+
+builder.Services.AddScoped<ColumnApiService>(sp =>
+{
+    var httpClient = sp.GetRequiredService<IHttpClientFactory>().CreateClient("KanbanAPI");
+    var authProvider = sp.GetRequiredService<AuthenticationStateProvider>();
+    var logger = sp.GetRequiredService<ILogger<ColumnApiService>>();
+    return new ColumnApiService(httpClient, authProvider, logger);
+});
+
+builder.Services.AddScoped<TaskApiService>(sp =>
+{
+    var httpClient = sp.GetRequiredService<IHttpClientFactory>().CreateClient("KanbanAPI");
+    var authProvider = sp.GetRequiredService<AuthenticationStateProvider>();
+    var logger = sp.GetRequiredService<ILogger<TaskApiService>>();
+    return new TaskApiService(httpClient, authProvider, logger);
+});
+
+builder.Services.AddScoped<CommentApiService>(sp =>
+{
+    var httpClient = sp.GetRequiredService<IHttpClientFactory>().CreateClient("KanbanAPI");
+    var authProvider = sp.GetRequiredService<AuthenticationStateProvider>();
+    var logger = sp.GetRequiredService<ILogger<CommentApiService>>();
+    return new CommentApiService(httpClient, authProvider, logger);
+});
+
+builder.Services.AddScoped<AttachmentApiService>(sp =>
+{
+    var httpClient = sp.GetRequiredService<IHttpClientFactory>().CreateClient("KanbanAPI");
+    var authProvider = sp.GetRequiredService<AuthenticationStateProvider>();
+    var logger = sp.GetRequiredService<ILogger<AttachmentApiService>>();
+    return new AttachmentApiService(httpClient, authProvider, logger);
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
