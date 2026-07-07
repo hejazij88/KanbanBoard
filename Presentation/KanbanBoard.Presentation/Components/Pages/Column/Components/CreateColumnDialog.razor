@@ -1,0 +1,18 @@
+﻿@using KanbanBoard.Application.DTOs.Column
+@using KanbanBoard.Presentation.Services
+@inject ColumnApiService ColumnApiService
+@inject MudDialog Dialog
+@inject ISnackbar Snackbar
+
+<MudDialog>
+    <TitleContent>Add New Column</TitleContent>
+    <DialogContent>
+        <EditForm Model="@_model" OnValidSubmit="@CreateColumn">
+            <MudTextField @bind-Value="_model.Title" Label="Column Title" Required="true" />
+        </EditForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Text" OnClick="@(() => Dialog.CloseAsync())">Cancel</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@CreateColumn">Add</MudButton>
+    </DialogActions>
+</MudDialog>
