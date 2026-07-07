@@ -1,0 +1,45 @@
+﻿@using KanbanBoard.Application.DTOs.Board
+@using KanbanBoard.Presentation.Services
+@inject BoardApiService BoardApiService
+@inject MudDialog Dialog
+@inject ISnackbar Snackbar
+
+<MudDialog>
+    <TitleContent>Create New Board</TitleContent>
+    <DialogContent>
+        <EditForm Model="@_model" OnValidSubmit="@CreateBoard">
+            <MudTextField @bind-Value="_model.Title" Label="Board Title" Required="true" />
+            <MudTextField @bind-Value="_model.Description" Label="Description" Lines="2" />
+        </EditForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Text" OnClick="@(() => Dialog.CloseAsync())">Cancel</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@CreateBoard">Create</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] private DialogParameters? Parameters { get; set; }
+    private CreateBoardDto _model = new();
+
+    protected override void OnInitialized()
+    {
+        if (Parameters is not null)
+        {
+            _model.WorkspaceId = Parameters.TryGet<Guid>("WorkspaceId");
+        }
+    }
+
+    private async Task CreateBoard()
+    {
+        try
+        {
+            var result = await BoardApiService.CreateBoardAsync(_model);
+            Dialog.CloseAsync(DialogResult.Ok(result));
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+    }
+}

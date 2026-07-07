@@ -1,0 +1,28 @@
+﻿@page "/register"
+@using KanbanBoard.Application.DTOs.Auth
+@using KanbanBoard.Presentation.Services
+@using Microsoft.AspNetCore.Components.Authorization
+@inject AuthApiService AuthApiService
+@inject AuthenticationStateProvider AuthProvider
+@inject NavigationManager Navigation
+@inject ISnackbar Snackbar
+
+<MudContainer MaxWidth="MaxWidth.Small" Class="mt-16">
+    <MudPaper Class="pa-8" Elevation="4">
+        <MudText Typo="Typo.h4" Align="Align.Center" Class="mb-8">Register</MudText>
+
+        <EditForm Model="@_registerModel" OnValidSubmit="@HandleRegister">
+            <MudTextField @bind-Value="_registerModel.UserName" Label="Username" Required="true" />
+            <MudTextField @bind-Value="_registerModel.Email" Label="Email" InputType="InputType.Email" Required="true" />
+            <MudTextField @bind-Value="_registerModel.Password" Label="Password" InputType="InputType.Password" Required="true" />
+
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" Class="mt-4">
+                Register
+            </MudButton>
+        </EditForm>
+
+        <MudText Align="Align.Center" Class="mt-4">
+            Already have an account? <MudLink Href="/login">Login</MudLink>
+        </MudText>
+    </MudPaper>
+</MudContainer>
