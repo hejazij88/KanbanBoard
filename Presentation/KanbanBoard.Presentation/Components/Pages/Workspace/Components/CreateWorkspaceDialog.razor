@@ -1,0 +1,36 @@
+﻿@using KanbanBoard.Application.DTOs.Workspace
+@using KanbanBoard.Presentation.Services
+@inject WorkspaceApiService WorkspaceApiService
+@inject MudDialog Dialog
+@inject ISnackbar Snackbar
+
+<MudDialog>
+    <TitleContent>Create New Workspace</TitleContent>
+    <DialogContent>
+        <EditForm Model="@_model" OnValidSubmit="@CreateWorkspace">
+            <MudTextField @bind-Value="_model.Name" Label="Workspace Name" Required="true" />
+            <MudTextField @bind-Value="_model.Description" Label="Description" Lines="3" />
+        </EditForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Text" OnClick="@(() => Dialog.CloseAsync())">Cancel</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@CreateWorkspace">Create</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    private CreateWorkspaceDto _model = new();
+
+    private async Task CreateWorkspace()
+    {
+        try
+        {
+            var result = await WorkspaceApiService.CreateWorkspaceAsync(_model);
+            await Dialog.CloseAsync(DialogResult.Ok(result));
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+    }
+}
