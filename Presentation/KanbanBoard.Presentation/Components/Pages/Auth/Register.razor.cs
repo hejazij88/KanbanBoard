@@ -8,7 +8,7 @@ public partial class Register
 {
     private RegisterDto _registerModel = new();
 
-    private async Task HandleRegister()
+    private async System.Threading.Tasks.Task HandleRegister()
     {
         try
         {

@@ -1,4 +1,5 @@
-﻿@inject IDialogService DialogService
+﻿@using KanbanBoard.Presentation.Extensions
+@inject IDialogService DialogService
 
 <div style="cursor: pointer;" @onclick="@(() => OpenTaskDetail())" draggable="true">
     <MudPaper Class="pa-2" Elevation="1">

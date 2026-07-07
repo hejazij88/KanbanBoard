@@ -1,5 +1,6 @@
 ﻿using KanbanBoard.Application.DTOs.Attachment;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Forms;
 
 namespace KanbanBoard.Presentation.Services;
 
@@ -45,4 +46,31 @@ public class AttachmentApiService : BaseApiService
     {
         await DeleteAsync($"api/attachments/{id}", ct);
     }
+
+
+    public async Task<AttachmentDto> UploadAttachmentAsync(Guid taskId, IBrowserFile file, CancellationToken ct = default)
+    {
+        // محدودیت حجم فایل (مثلاً 10 مگابایت)
+        const long maxFileSize = 10 * 1024 * 1024;
+
+        using var stream = file.OpenReadStream(maxFileSize);
+        using var formData = new MultipartFormDataContent();
+        var fileContent = new StreamContent(stream);
+        fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(file.ContentType);
+        formData.Add(fileContent, "file", file.Name);
+
+        var request = new HttpRequestMessage(HttpMethod.Post, $"api/attachments/task/{taskId}")
+        {
+            Content = formData
+        };
+        await AddAuthorizationHeaderAsync(request);
+
+        var response = await _httpClient.SendAsync(request, ct);
+        if (!response.IsSuccessStatusCode)
+            await HandleErrorResponseAsync(response);
+
+        return await response.Content.ReadFromJsonAsync<AttachmentDto>(ct)
+               ?? throw new InvalidOperationException("Failed to deserialize attachment response");
+    }
+
 }

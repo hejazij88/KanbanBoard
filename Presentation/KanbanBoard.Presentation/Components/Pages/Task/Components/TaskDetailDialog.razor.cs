@@ -52,8 +52,7 @@ public partial class TaskDetailDialog
         try
         {
             var file = e.File;
-            var model = new CreateAttachmentDto { File = file };
-            await AttachmentApiService.UploadAttachmentAsync(TaskId, model);
+            await AttachmentApiService.UploadAttachmentAsync(TaskId, file); // ← متد جدید
             await LoadTask();
             Snackbar.Add("File uploaded successfully!", Severity.Success);
         }

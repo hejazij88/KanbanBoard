@@ -13,8 +13,10 @@ public partial class CreateTaskDialog
 
     protected override void OnInitialized()
     {
-        if (Parameters != null && Parameters.TryGetValue("ColumnId", out object? columnId))
-            _columnId = (Guid)columnId!;
+        if (Parameters is not null)
+        {
+            _columnId = Parameters.TryGet<Guid>("ColumnId");
+        }
     }
 
     private async System.Threading.Tasks.Task CreateTask()

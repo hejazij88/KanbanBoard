@@ -12,9 +12,9 @@ public partial class WorkspaceDetail
     private WorkspaceDto? _workspace;
     private List<BoardDto> _boards = new();
     private bool _isLoading = true;
-    protected override async Task OnInitializedAsync() => await LoadData();
+    protected override async System.Threading.Tasks.Task OnInitializedAsync() => await LoadData();
 
-    private async Task LoadData()
+    private async System.Threading.Tasks.Task LoadData()
     {
         _isLoading = true;
         try
@@ -32,7 +32,7 @@ public partial class WorkspaceDetail
         }
     }
 
-    private async Task OpenCreateBoardDialog()
+    private async System.Threading.Tasks.Task OpenCreateBoardDialog()
     {
         var parameters = new DialogParameters { { "WorkspaceId", WorkspaceId } };
         var dialog = await DialogService.ShowAsync<CreateBoardDialog>("Create Board", parameters);

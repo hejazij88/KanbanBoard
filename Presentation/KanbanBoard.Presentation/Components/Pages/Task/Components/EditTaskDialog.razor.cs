@@ -12,9 +12,9 @@ public partial class EditTaskDialog
 
     protected override void OnInitialized()
     {
-        if (Parameters != null && Parameters.TryGetValue("Task", out object? taskObj))
+        if (Parameters is not null)
         {
-            var task = (TaskDto)taskObj!;
+            var task = Parameters.TryGet<TaskDto>("Task");
             _taskId = task.Id;
             _model.Title = task.Title;
             _model.Description = task.Description;

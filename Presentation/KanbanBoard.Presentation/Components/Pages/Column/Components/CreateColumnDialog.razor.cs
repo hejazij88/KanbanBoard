@@ -11,9 +11,9 @@ public partial class CreateColumnDialog
 
     protected override void OnInitialized()
     {
-        if (Parameters != null && Parameters.TryGetValue("BoardId", out object? boardId))
+        if (Parameters is not null)
         {
-            // BoardId در خود Command استفاده می‌شود و در DTO نیست
+            var boardId = Parameters.TryGet<Guid>("BoardId");
         }
     }
 

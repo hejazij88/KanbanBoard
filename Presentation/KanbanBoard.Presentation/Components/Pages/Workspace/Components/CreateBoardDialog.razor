@@ -24,9 +24,9 @@
 
     protected override void OnInitialized()
     {
-        if (Parameters != null && Parameters.TryGetValue("WorkspaceId", out object? workspaceId))
+        if (Parameters is not null)
         {
-            _model.WorkspaceId = (Guid)workspaceId!;
+            _model.WorkspaceId = Parameters.TryGet<Guid>("WorkspaceId");
         }
     }
 
