@@ -1,0 +1,28 @@
+﻿@page "/login"
+@using KanbanBoard.Presentation.Services
+@using Microsoft.AspNetCore.Components.Authorization
+@inject AuthApiService AuthApiService
+@inject AuthenticationStateProvider AuthProvider
+@inject NavigationManager Navigation
+@inject ISnackbar Snackbar
+
+<MudContainer MaxWidth="MaxWidth.Small" Class="mt-16">
+    <MudPaper Class="pa-8" Elevation="4">
+        <MudText Typo="Typo.h4" Align="Align.Center" Class="mb-8">Login</MudText>
+
+        <EditForm Model="@_loginModel" OnValidSubmit="@HandleLogin">
+            <MudTextField @bind-Value="_loginModel.Email" Label="Email" For="@(() => _loginModel.Email)"
+                          InputType="InputType.Email" Required="true" />
+            <MudTextField @bind-Value="_loginModel.Password" Label="Password" For="@(() => _loginModel.Password)"
+                          InputType="InputType.Password" Required="true" />
+
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" Class="mt-4">
+                Login
+            </MudButton>
+        </EditForm>
+
+        <MudText Align="Align.Center" Class="mt-4">
+            Don't have an account? <MudLink Href="/register">Register</MudLink>
+        </MudText>
+    </MudPaper>
+</MudContainer>
