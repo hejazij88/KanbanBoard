@@ -1,0 +1,82 @@
+﻿@using KanbanBoard.Presentation.Services
+@inject TaskApiService TaskApiService
+@inject CommentApiService CommentApiService
+@inject AttachmentApiService AttachmentApiService
+@inject IDialogService DialogService
+@inject MudDialog Dialog
+@inject ISnackbar Snackbar
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h5">@_task?.Title</MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (_isLoading)
+        {
+            <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+        }
+        else if (_task != null)
+        {
+            <MudStack Spacing="2">
+                <MudText><strong>Description:</strong> @_task.Description</MudText>
+                <MudText><strong>Priority:</strong> @_task.Priority</MudText>
+                <MudText><strong>Status:</strong> @_task.ColumnTitle</MudText>
+                @if (_task.AssignedUserId.HasValue)
+                {
+                    <MudText><strong>Assigned to:</strong> @_task.AssignedUsername</MudText>
+                }
+                @if (_task.DueDate.HasValue)
+                {
+                    <MudText><strong>Due Date:</strong> @_task.DueDate.Value.ToShortDateString()</MudText>
+                }
+
+                <MudDivider />
+
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Edit"
+                           OnClick="@OpenEditTaskDialog" FullWidth="true">
+                    Edit Task
+                </MudButton>
+
+                <MudText Typo="Typo.h6" Class="mt-4">Comments (@_task.Comments.Count)</MudText>
+                @foreach (var comment in _task.Comments.OrderByDescending(c => c.CreatedAt))
+                {
+                    <MudPaper Class="pa-2" Elevation="1">
+                        <MudText Typo="Typo.body2"><strong>@comment.Username</strong> - @comment.CreatedAt.ToShortDateString()</MudText>
+                        <MudText Typo="Typo.body1">@comment.Content</MudText>
+                    </MudPaper>
+                }
+
+                <EditForm Model="@_commentModel" OnValidSubmit="@AddComment">
+                    <MudTextField @bind-Value="_commentModel.Content" Label="Add a comment..." Lines="2" />
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small">
+                        Post Comment
+                    </MudButton>
+                </EditForm>
+
+                <MudText Typo="Typo.h6" Class="mt-4">Attachments (@_task.Attachments.Count)</MudText>
+                @foreach (var attachment in _task.Attachments)
+                {
+                    <MudPaper Class="pa-2" Elevation="1">
+                        <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                            <MudText Typo="Typo.body2">
+                                <MudIcon Icon="@Icons.Material.Filled.AttachFile" Size="Size.Small" />
+                                @attachment.FileName
+                            </MudText>
+                            <MudButton Variant="Variant.Text" Color="Color.Error" Size="Size.Small"
+                                       OnClick="@(() => DeleteAttachment(attachment.Id))">
+                                Delete
+                            </MudButton>
+                        </MudStack>
+                    </MudPaper>
+                }
+
+                <MudFileUpload T="IFormFile" OnChange="@UploadAttachment" Variant="Variant.Filled" Color="Color.Secondary" Size="Size.Small">
+                    <MudText>Upload File</MudText>
+                </MudFileUpload>
+            </MudStack>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Text" OnClick="@(() => Dialog.CloseAsync(DialogResult.Ok(true)))">Close</MudButton>
+    </DialogActions>
+</MudDialog>
