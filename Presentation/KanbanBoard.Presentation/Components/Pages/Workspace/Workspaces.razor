@@ -1,0 +1,48 @@
+﻿@page "/workspaces"
+@using KanbanBoard.Presentation.Services
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+@inject WorkspaceApiService WorkspaceApiService
+@inject IDialogService DialogService
+@inject ISnackbar Snackbar
+@inject NavigationManager Navigation
+
+<MudText Typo="Typo.h4" Class="mb-4">My Workspaces</MudText>
+
+<MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add"
+           OnClick="@OpenCreateWorkspaceDialog" Class="mb-4">
+    Create Workspace
+</MudButton>
+
+@if (_isLoading)
+{
+    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+}
+else if (_workspaces.Any())
+{
+    <MudGrid>
+        @foreach (var workspace in _workspaces)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudCard Class="pa-4" Style="cursor: pointer;" @onclick="@(() => Navigation.NavigateTo($"/workspace/{workspace.Id}"))">
+                    <MudCardContent>
+                        <MudText Typo="Typo.h6">@workspace.Name</MudText>
+                        <MudDivider Class="my-2" />
+                        <MudText Typo="Typo.body2">
+                            <MudIcon Icon="@Icons.Material.Filled.Person" Size="Size.Small" />
+                            @workspace.MemberCount members
+                        </MudText>
+                        <MudText Typo="Typo.body2">
+                            <MudIcon Icon="@Icons.Material.Filled.Dashboard" Size="Size.Small" />
+                            @workspace.BoardCount boards
+                        </MudText>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+        }
+    </MudGrid>
+}
+else
+{
+    <MudText Typo="Typo.body1" Color="Color.Tertiary">No workspaces found. Create your first workspace!</MudText>
+}
