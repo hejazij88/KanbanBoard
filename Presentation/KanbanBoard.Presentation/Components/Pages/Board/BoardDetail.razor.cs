@@ -1,4 +1,5 @@
 ﻿using KanbanBoard.Application.DTOs.Board;
+using KanbanBoard.Presentation.Components.Pages.Column.Components;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
@@ -9,9 +10,9 @@ public partial class BoardDetail
     [Parameter] public Guid BoardId { get; set; }
     private BoardDto? _board;
     private bool _isLoading = true;
-    protected override async Task OnInitializedAsync() => await LoadBoard();
+    protected override async System.Threading.Tasks.Task OnInitializedAsync() => await LoadBoard();
 
-    private async Task LoadBoard()
+    private async System.Threading.Tasks.Task LoadBoard()
     {
         _isLoading = true;
         try
@@ -28,7 +29,7 @@ public partial class BoardDetail
         }
     }
 
-    private async Task OpenCreateColumnDialog()
+    private async System.Threading.Tasks.Task OpenCreateColumnDialog()
     {
         var parameters = new DialogParameters { { "BoardId", BoardId } };
         var dialog = await DialogService.ShowAsync<CreateColumnDialog>("Add Column", parameters);

@@ -17,7 +17,7 @@ public partial class CreateColumnDialog
         }
     }
 
-    private async Task CreateColumn()
+    private async System.Threading.Tasks.Task CreateColumn()
     {
         try
         {

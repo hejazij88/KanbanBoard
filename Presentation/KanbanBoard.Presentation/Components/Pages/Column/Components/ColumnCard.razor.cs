@@ -1,4 +1,5 @@
 ﻿using KanbanBoard.Application.DTOs.Column;
+using KanbanBoard.Presentation.Components.Pages.Task.Components;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
@@ -9,7 +10,7 @@ public partial class ColumnCard
     [Parameter] public ColumnDto Column { get; set; } = null!;
     [Parameter] public EventCallback OnTaskMoved { get; set; }
 
-    private async Task OpenCreateTaskDialog()
+    private async System.Threading.Tasks.Task OpenCreateTaskDialog()
     {
         var parameters = new DialogParameters { { "ColumnId", Column.Id } };
         var dialog = await DialogService.ShowAsync<CreateTaskDialog>("Add Task", parameters);
