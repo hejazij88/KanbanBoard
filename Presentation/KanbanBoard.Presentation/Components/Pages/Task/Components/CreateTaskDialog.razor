@@ -1,0 +1,27 @@
+﻿@using KanbanBoard.Domain.Enums
+@using KanbanBoard.Presentation.Services
+@inject TaskApiService TaskApiService
+@inject MudDialog Dialog
+@inject ISnackbar Snackbar
+
+<MudDialog>
+    <TitleContent>Add New Task</TitleContent>
+    <DialogContent>
+        <EditForm Model="@_model" OnValidSubmit="@CreateTask">
+            <MudTextField @bind-Value="_model.Title" Label="Task Title" Required="true" />
+            <MudTextField @bind-Value="_model.Description" Label="Description" Lines="3" />
+            <MudSelect T="Priority" Label="Priority" @bind-Value="_model.Priority">
+                @foreach (Priority p in Enum.GetValues(typeof(Priority)))
+                {
+                    <MudSelectItem Value="p">@p</MudSelectItem>
+                }
+            </MudSelect>
+            <MudDatePicker @bind-Value="_model.DueDate" Label="Due Date" />
+            <MudTextField @bind-Value="_model.AssignedUserId" Label="Assigned User ID" />
+        </EditForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Text" OnClick="@(() => Dialog.CloseAsync())">Cancel</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@CreateTask">Create</MudButton>
+    </DialogActions>
+</MudDialog>
