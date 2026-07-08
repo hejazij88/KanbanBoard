@@ -1,12 +1,12 @@
-﻿using System.Security.Cryptography;
-using System.Text;
-using FluentAssertions;
+﻿using FluentAssertions;
 using KanbanBoard.Application.DTOs.Auth;
 using KanbanBoard.Application.Features.Auth.Commands;
 using KanbanBoard.Application.Interfaces.Repositories;
 using KanbanBoard.Application.Interfaces.Services;
 using KanbanBoard.Domain.Entities;
 using Moq;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace KanbanBoard.Tests.Unit.Application.Commands;
 
