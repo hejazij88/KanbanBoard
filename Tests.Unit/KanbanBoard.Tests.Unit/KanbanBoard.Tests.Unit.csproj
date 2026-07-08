@@ -24,4 +24,13 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Domain\" />
+    <Folder Include="Helper\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Domain\KanbanBoard.Domain\KanbanBoard.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
