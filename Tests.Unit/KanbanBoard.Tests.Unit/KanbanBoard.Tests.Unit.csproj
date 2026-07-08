@@ -27,6 +27,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Application\KanbanBoard.Application\KanbanBoard.Application.csproj" />
     <ProjectReference Include="..\..\Domain\KanbanBoard.Domain\KanbanBoard.Domain.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\KanbanBoard.Infrastructure\KanbanBoard.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

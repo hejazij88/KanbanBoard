@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using FluentAssertions;
 using KanbanBoard.Application.DTOs.Board;
+using KanbanBoard.Application.DTOs.Task;
 using KanbanBoard.Application.Features.Board.Queries;
 using KanbanBoard.Application.Interfaces.Repositories;
 using KanbanBoard.Domain.Entities;
+using KanbanBoard.Domain.Enums;
 using Moq;
 
 namespace KanbanBoard.Tests.Unit.Application.Queries;
