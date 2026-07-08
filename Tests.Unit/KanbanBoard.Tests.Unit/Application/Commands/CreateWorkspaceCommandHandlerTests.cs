@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using AutoMapper;
+﻿using AutoMapper;
 using FluentAssertions;
 using KanbanBoard.Application.DTOs.Workspace;
 using KanbanBoard.Application.Features.Workspace.Commands;
@@ -7,6 +6,7 @@ using KanbanBoard.Application.Interfaces.Repositories;
 using KanbanBoard.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Moq;
+using System.Security.Claims;
 
 namespace KanbanBoard.Tests.Unit.Application.Commands;
 
